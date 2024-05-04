@@ -56,7 +56,7 @@ export class NavbarComponent implements OnInit {
   mobileWidth: number = 1070;
   product_arr: any[] = new Array();
   flag = ['/home'].includes(location.pathname);
-
+total_price:number=0;
   ngOnInit(): void {
     this.isMobile = this.width < this.mobileWidth;
   }
@@ -65,6 +65,7 @@ export class NavbarComponent implements OnInit {
     this.isMobile = this.width < this.mobileWidth;
   }
   cartApi() {
+    this.total_price=0
     this.product_arr = [];
     this.getCart.getCart(this.id).subscribe((data) => {
       console.log(data);
@@ -72,6 +73,7 @@ export class NavbarComponent implements OnInit {
         data.Result.map((i: any) => {
           this.product_arr.push(i);
         });
+        this.total_price+=data.total_price
       }
     });
   }
@@ -112,6 +114,7 @@ export class NavbarComponent implements OnInit {
         ]);
         h5.textContent = dataobj[0].quantity;
         h4.textContent = '₹ ' + dataobj[0].total_price;
+
       });
     } else {
       this.updateCart.updateCart(this.id, p_id, 1).subscribe((data) => {

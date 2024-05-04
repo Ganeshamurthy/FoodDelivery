@@ -90,7 +90,7 @@
                       mat-icon-button
                       color="warn"
                       value="[{{ i.p_id }},{{ i.quantity }}]"
-                      (click)="updateCartAddApi(removebtn, addbtn, h5, h4)"
+                      (click)="[updateCartAddApi(removebtn, addbtn, h5, h4)]"
                     >
                       <mat-icon fontSet="material-icons-outlined">add</mat-icon>
                     </button>
@@ -126,7 +126,9 @@
         </mat-card-content>
       </mat-card>
     </div>
-    } }
+    }
+    <h1 #price>{{total_price}}</h1> 
+  }
   </mat-drawer>
   <mat-toolbar style="background-color: transparent">
     <span [style]="!isMobile ? 'margin-left: 5em' : 'margin-left: 0em'"
