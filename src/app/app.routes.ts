@@ -6,7 +6,7 @@ import { FoodProductComponent } from './Layouts/food-product/food-product.compon
 import { LoginComponent } from './Layouts/login/login.component';
 import { NavbarComponent } from './Components/navbar/navbar.component';
 import { authguardGuard } from './Guard/authguard.guard';
-import { SignupComponent } from './Layouts/Signup/signup/signup.component';
+import { SignupComponent } from './Layouts/Signup/signup.component';
 
 export const routes: Routes = [
     {
