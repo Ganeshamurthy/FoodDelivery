@@ -1,0 +1,280 @@
+<mat-drawer-container class="example-container" autosize>
+  <mat-drawer
+    #drawer
+    [class]="!isMobile ? 'example-sidenav' : 'cart-mobile'"
+    mode="over"
+  >
+    <div class="close">
+      <button
+        mat-icon-button
+        color="warn"
+        class="icon-button-large"
+        (click)="drawer.toggle()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    <a routerLink="home" class="nav-link linkMobile" routerLinkActive="isactive"
+      >Home</a
+    >
+    <a
+      routerLink="aboutUs"
+      class="nav-link linkMobile"
+      routerLinkActive="isactive"
+      >aboutUs</a
+    >
+    <a routerLink="food" class="nav-link linkMobile" routerLinkActive="isactive"
+      >Food</a
+    >
+    <a
+      routerLink="contact"
+      class="nav-link linkMobile"
+      routerLinkActive="isactive"
+      style="margin-top: 1em"
+      >Contact</a
+    >
+    <button class="button linkMobile">Login</button>
+  </mat-drawer>
+  <mat-drawer
+    #cart
+    [class]="!isMobile ? 'cart' : 'cart-mobile'"
+    mode="over"
+    position="end"
+  >
+    <div class="close">
+      <button
+        mat-icon-button
+        color="warn"
+        class="icon-button-large"
+        (click)="cart.toggle()"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+    @if(product_arr.length === 0){
+    <div
+      class="container d-flex"
+      style="height: 85%; align-items: center; justify-content: center"
+    >
+      <p style="font-size: 2.3em; text-align: center">Your cart is empty</p>
+    </div>
+
+    } @else{
+    <h1 style="text-align: center; padding-bottom: 1em">Cart</h1>
+    @for(i of product_arr; track $index){
+    <div #card>
+      <mat-card id="{{ i.p_id }}">
+        <mat-card-header>
+          <mat-card-title-group>
+            <mat-card-title>{{ i.p_name }}</mat-card-title>
+            <mat-card-subtitle class="d-flex">
+              <div class="container">
+                <div class="row">
+                  <div class="col-6 d-flex">
+                    <button
+                      #removebtn
+                      mat-icon-button
+                      color="warn"
+                      value="[{{ i.p_id }},{{ i.quantity }}]"
+                      (click)="updateCartRemoveApi(removebtn, addbtn, h5, h4)"
+                    >
+                      <mat-icon fontSet="material-icons-outlined"
+                        >remove</mat-icon
+                      >
+                    </button>
+                    <h5 #h5 style="margin: 0.6em 0.5em 0em 0.5em">
+                      {{ i.quantity }}
+                    </h5>
+                    <button
+                      #addbtn
+                      mat-icon-button
+                      color="warn"
+                      value="[{{ i.p_id }},{{ i.quantity }}]"
+                      (click)="updateCartAddApi(removebtn, addbtn, h5, h4)"
+                    >
+                      <mat-icon fontSet="material-icons-outlined">add</mat-icon>
+                    </button>
+                  </div>
+                  <div class="col-6 ps-4">
+                    <button
+                      #deletebtn
+                      mat-icon-button
+                      color="warn"
+                      value="{{ i.p_id }}"
+                      (click)="[removeItemApi(deletebtn, card)]"
+                    >
+                      <mat-icon fontSet="material-icons-outlined"
+                        >delete</mat-icon
+                      >
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </mat-card-subtitle>
+            <img
+              mat-card-md-image
+              src="http://localhost:8080/getImage?id={{ i.p_id }}"
+              alt=""
+            />
+          </mat-card-title-group>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="d-flex">
+            <h4>Price:&nbsp;</h4>
+            <p #h4 style="font-size: 1.4em">₹{{ i.total_price }}</p>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    } }
+  </mat-drawer>
+  <mat-toolbar style="background-color: transparent">
+    <span [style]="!isMobile ? 'margin-left: 5em' : 'margin-left: 0em'"
+      ><a routerLink="">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="160"
+          height="38"
+          viewBox="0 0 163 38"
+        >
+          <g id="Logo" transform="translate(-260 -51)">
+            <g id="Logo-2" data-name="Logo" transform="translate(260 51)">
+              <g id="Elements">
+                <path
+                  id="Path_1429"
+                  data-name="Path 1429"
+                  d="M315.086,140.507H275.222v-.894c0-11.325,8.941-20.538,19.933-20.538s19.931,9.213,19.931,20.538Z"
+                  transform="translate(-270.155 -115.396)"
+                  fill="#f29f05"
+                ></path>
+                <path
+                  id="Path_1430"
+                  data-name="Path 1430"
+                  d="M301.13,133.517a1.488,1.488,0,0,1-1.394-.994,11.361,11.361,0,0,0-10.583-7.54,1.528,1.528,0,0,1,0-3.055,14.353,14.353,0,0,1,13.37,9.527,1.541,1.541,0,0,1-.875,1.966A1.444,1.444,0,0,1,301.13,133.517Z"
+                  transform="translate(-264.176 -113.935)"
+                  fill="#fff"
+                ></path>
+                <path
+                  id="Path_1431"
+                  data-name="Path 1431"
+                  d="M297.343,146.544a14.043,14.043,0,0,1-13.837-14.211h2.975a10.865,10.865,0,1,0,21.723,0h2.975A14.043,14.043,0,0,1,297.343,146.544Z"
+                  transform="translate(-266.247 -108.544)"
+                  fill="#363636"
+                ></path>
+                <path
+                  id="Path_1432"
+                  data-name="Path 1432"
+                  d="M302.183,132.519a7.064,7.064,0,1,1-14.122,0Z"
+                  transform="translate(-264.027 -108.446)"
+                  fill="#363636"
+                ></path>
+                <path
+                  id="Path_1433"
+                  data-name="Path 1433"
+                  d="M320.332,134.575H273.3a1.528,1.528,0,0,1,0-3.055h47.033a1.528,1.528,0,0,1,0,3.055Z"
+                  transform="translate(-271.815 -108.923)"
+                  fill="#f29f05"
+                ></path>
+                <path
+                  id="Path_1434"
+                  data-name="Path 1434"
+                  d="M289.154,123.4a1.507,1.507,0,0,1-1.487-1.528v-3.678a1.488,1.488,0,1,1,2.975,0v3.678A1.508,1.508,0,0,1,289.154,123.4Z"
+                  transform="translate(-264.154 -116.667)"
+                  fill="#f29f05"
+                ></path>
+                <path
+                  id="Path_1435"
+                  data-name="Path 1435"
+                  d="M284.777,138.133H275.3a1.528,1.528,0,0,1,0-3.055h9.474a1.528,1.528,0,0,1,0,3.055Z"
+                  transform="translate(-270.84 -107.068)"
+                  fill="#363636"
+                ></path>
+                <path
+                  id="Path_1436"
+                  data-name="Path 1436"
+                  d="M284.8,141.691h-6.5a1.528,1.528,0,0,1,0-3.055h6.5a1.528,1.528,0,0,1,0,3.055Z"
+                  transform="translate(-269.379 -105.218)"
+                  fill="#363636"
+                ></path>
+              </g>
+            </g>
+            <text
+              id="Quickeat"
+              transform="translate(320 77)"
+              fill="#363636"
+              font-size="20"
+              font-family="Poppins"
+              font-weight="700"
+            >
+              <tspan x="0" y="0">QUICK</tspan>
+              <tspan y="0" fill="#f29f05">EAT</tspan>
+            </text>
+          </g>
+        </svg>
+      </a></span
+    >
+
+    @if(isMobile){
+    <span class="example-spacer"></span>
+    <button mat-icon-button color="warn" (click)="[cart.toggle(), cartApi()]">
+      <mat-icon fontSet="material-icons-outlined">shopping_cart</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      color="warn"
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+      (click)="drawer.toggle()"
+    >
+      <mat-icon>menu</mat-icon>
+    </button>
+    } @else{
+    <span class="example-spacer" style="margin-left: 2em">
+      <ul>
+        <li>
+          <a
+            routerLink="home"
+            class="nav-link link"
+            [routerLinkActive]="flag ? 'isactive' : ''"
+            >Home</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="aboutUs"
+            class="nav-link link"
+            routerLinkActive="isactive"
+            >aboutUs</a
+          >
+        </li>
+        <li>
+          <a routerLink="food" class="nav-link link" routerLinkActive="isactive"
+            >Food</a
+          >
+        </li>
+        <li>
+          <a
+            routerLink="contact"
+            class="nav-link link"
+            routerLinkActive="isactive"
+            >contact</a
+          >
+        </li>
+      </ul>
+    </span>
+    <span>
+      <button
+        mat-icon-button
+        color="warn"
+        (click)="[cart.toggle(), cartApi()]"
+        style="margin-right: 1.5em"
+      >
+        <mat-icon fontSet="material-icons-outlined">shopping_cart</mat-icon>
+      </button>
+      <button class="button" (click)="logout()">Logout</button>
+    </span>
+    }
+  </mat-toolbar>
+  <router-outlet></router-outlet>
+  <app-footer></app-footer>
+</mat-drawer-container>

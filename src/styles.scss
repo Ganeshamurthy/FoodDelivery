@@ -1,0 +1,63 @@
+/* You can add global styles to this file, and also import other style files */
+
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons|Material+Icons+Outlined");
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=VT323&display=swap');
+
+
+html,
+body {
+
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+  height: 100%;
+}
+
+* {
+  color: #363636;
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+p{
+  color: #787878;
+}
+.button{
+  padding: .2em 1em;
+  border: 2px solid orange;
+  background-color: transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  transition: color .2s;
+  z-index: 2;
+  font-family: "Poppins", sans-serif;
+}
+.button::before{
+  content: " ";
+  background-color: orange;
+  z-index: -1;
+  width: 170%;
+  height: 270%;
+  position: absolute;
+  border-radius: 50%;
+  left: -2.2em;
+  top: -.7em;
+  transition: all .5s;
+  font-family: "Poppins", sans-serif;
+}
+
+.button:hover{
+  color: orange;
+  font-family: "Poppins", sans-serif;
+  
+}
+
+.button:hover::before{
+  left: -10em;
+  top: 2em;
+  font-family: "Poppins", sans-serif;
+}
+
+

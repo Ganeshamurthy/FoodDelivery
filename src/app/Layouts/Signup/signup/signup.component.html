@@ -1,0 +1,24 @@
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-in-container">
+            <form (ngSubmit)="onSubmit()" >
+                <h1>Sign up</h1>
+                <span> Join to our Community!</span>
+                <input type="email" [(ngModel)]="email" name="email" placeholder="Email" />
+                <input type="password" [(ngModel)]="password" name="password"  placeholder="Password" />
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-right">
+                    <h1 style="color: white;">Welcome to Quick Eat</h1>
+                    <b style="color: white;">Click here If you already have a account</b>
+                    <a routerLink="login">
+                        <button class="ghost">Sign IN</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

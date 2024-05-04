@@ -1,0 +1,21 @@
+.container-fluid{
+    margin: 2em 0em;
+    padding: 0em 2.5em;
+}
+
+.card{
+    margin-top: 1em;
+    min-height: 98%;
+    padding: 0em 1em;
+}
+
+.img{
+    border-radius: .3em;
+    margin: 1em 0em;
+}
+
+.mat-mdc-button.mat-warn {
+    --mdc-text-button-label-text-color: orange;
+    --mat-text-button-state-layer-color: orange;
+    --mat-text-button-ripple-color: rgba(255, 166, 0, 0.264);
+}

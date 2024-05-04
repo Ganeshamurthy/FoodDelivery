@@ -1,0 +1,27 @@
+
+<body>
+    <div class="container" id="container">
+      
+        <div class="form-container sign-in-container">
+            <form (ngSubmit)="onSubmit()" >
+                <h1>Sign in</h1>
+                <span> use your account</span>
+                <input type="email" [(ngModel)]="email" name="email" placeholder="Email" />
+                <input type="password" [(ngModel)]="password" name="password"  placeholder="Password" />
+                <a href="#">Forgot your password?</a>
+                <button type="submit">Sign In</button>
+            </form>
+        </div>
+        <div class="overlay-container">
+            <div class="overlay">
+                <div class="overlay-panel overlay-right">
+                    <h1 style="color: rgb(228, 228, 228);">Welcome Back!</h1>
+                    <a routerLink="signup">
+                        <button>Sign Up</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+

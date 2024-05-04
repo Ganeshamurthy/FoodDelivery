@@ -1,0 +1,73 @@
+<div class="container-fluid">
+  <div class="row">
+    @if(food_arr.length==0){ @for (i of '123456'; track $index) {
+    <div class="col-4 mt-5">
+      <p-skeleton width="13rem" styleClass="mb-2"></p-skeleton>
+      <p-skeleton height="15rem" styleClass="mb-2"></p-skeleton>
+      <p-skeleton width="19rem" styleClass="mb-2"></p-skeleton>
+      <p-skeleton styleClass="mb-2"></p-skeleton>
+      <p-skeleton width="17rem" styleClass="mb-2"></p-skeleton>
+      <div class="row">
+        <div class="col-6">
+          <p-skeleton
+            width="10rem"
+            height="4rem"
+            styleClass="mt-3"
+          ></p-skeleton>
+        </div>
+        <div class="col-6">
+          <p-skeleton
+            width="10rem"
+            height="4rem"
+            styleClass="mt-3"
+          ></p-skeleton>
+        </div>
+      </div>
+    </div>
+    } } @else { @for (i of food_arr; track $index) {
+    <div class="col-4 mt-3">
+      <mat-card class="card">
+        <mat-card-header>
+          <mat-card-title>
+            {{ i.Product_name }}
+          </mat-card-title>
+        </mat-card-header>
+        <img
+          mat-card-image
+          src="http://localhost:8080/getImage?id={{ i.id }}"
+          alt=""
+          class="img"
+        />
+        <mat-card-content>
+          <p>
+            {{ i.Description }}
+          </p>
+
+          <div class="d-flex container-fluid">
+            <div class="col-6 d-flex">
+              <h5>Price:&nbsp;&nbsp;</h5>
+              <p>₹{{ i.Price }}</p>
+            </div>
+            <div class="col-6">
+              <button
+                style="width: max-content"
+                class="pb-2"
+                #addCartBtn
+                (click)="show(addCartBtn)"
+                mat-button
+                color="warn"
+                value="{{ i.id }}"
+              >
+                <mat-icon fontSet="material-icons-outlined"
+                  >add_shopping_cart</mat-icon
+                >
+                add to cart
+              </button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+    } }
+  </div>
+</div>
