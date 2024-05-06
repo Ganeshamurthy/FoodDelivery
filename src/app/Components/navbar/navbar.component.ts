@@ -1,4 +1,10 @@
-import { Component, OnInit, inject } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+  inject,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButton, MatButtonModule } from '@angular/material/button';
@@ -15,6 +21,9 @@ import { DeleteFromCartService } from '../../Services/deleteFromCart/delete-from
 import { UpdateCartService } from '../../Services/updateCart/update-cart.service';
 import { FormsModule } from '@angular/forms';
 import { LogoutService } from '../../Services/logoutService/logout.service';
+import { TotalPriceService } from '../../Services/TotalPrice/total-price.service';
+import { PaymentService } from '../../Services/Payment/payment.service';
+import { EmptyCartService } from '../../Services/EmptyCart/empty-cart.service';
 
 @Component({
   selector: 'app-navbar',
@@ -41,10 +50,15 @@ import { LogoutService } from '../../Services/logoutService/logout.service';
   },
 })
 export class NavbarComponent implements OnInit {
+  @ViewChild('Total_Price') priceEle!: ElementRef<HTMLHeadingElement>;
+
   getCart = inject(GetCartService);
   removeItem = inject(DeleteFromCartService);
   updateCart = inject(UpdateCartService);
   logoutService = inject(LogoutService);
+  totalPriceApi = inject(TotalPriceService);
+  chekOutApi = inject(PaymentService);
+  truncate = inject(EmptyCartService);
   router = inject(Router);
   //@ts-ignore
   id: number = parseInt(localStorage.getItem('id'));
@@ -56,7 +70,8 @@ export class NavbarComponent implements OnInit {
   mobileWidth: number = 1070;
   product_arr: any[] = new Array();
   flag = ['/home'].includes(location.pathname);
-total_price:number=0;
+  total_price: number = 0;
+
   ngOnInit(): void {
     this.isMobile = this.width < this.mobileWidth;
   }
@@ -65,24 +80,31 @@ total_price:number=0;
     this.isMobile = this.width < this.mobileWidth;
   }
   cartApi() {
-    this.total_price=0
+    this.total_price = 0;
     this.product_arr = [];
     this.getCart.getCart(this.id).subscribe((data) => {
-      console.log(data);
       if (data.status === 200) {
         data.Result.map((i: any) => {
           this.product_arr.push(i);
         });
-        this.total_price+=data.total_price
+        this.total_price = data.total_price;
       }
     });
   }
 
-  removeItemApi(btn: MatButton, card: HTMLDivElement) {
+  removeItemApi(
+    btn: MatButton,
+    card: HTMLDivElement,
+    price: HTMLParagraphElement
+  ) {
     this.removeItem
       .removeItem(this.id, btn._elementRef.nativeElement.value)
       .subscribe((data) => {
-        console.log(data);
+        //@ts-ignore
+        this.total_price = parseInt(data.total_price) - parseInt(price.textContent?.split('₹')[1].trim());
+        this.priceEle.nativeElement.textContent = '₹'.concat(
+          this.total_price.toString()
+        );
       });
     card.remove();
   }
@@ -94,7 +116,7 @@ total_price:number=0;
     h4: HTMLParagraphElement
   ) {
     let arr = JSON.parse(minbtn._elementRef.nativeElement.value);
-    console.log(arr);
+    // console.log(arr);
 
     let p_id = arr[0];
     let qty = arr[1];
@@ -103,7 +125,7 @@ total_price:number=0;
       this.updateCart.updateCart(this.id, p_id, qty - 1).subscribe((data) => {
         //@ts-ignore
         let dataobj = data.Message.filter((i) => i.p_id == p_id);
-        console.log(dataobj[0]);
+        // console.log(dataobj[0]);
         minbtn._elementRef.nativeElement.value = JSON.stringify([
           p_id,
           qty - 1,
@@ -114,17 +136,34 @@ total_price:number=0;
         ]);
         h5.textContent = dataobj[0].quantity;
         h4.textContent = '₹ ' + dataobj[0].total_price;
-
+        //@ts-ignore
+        this.priceEle.nativeElement.textContent = '₹' + data.total_price;
+        //@ts-ignore
+        this.total_price = data.total_price;
+      });
+      this.product_arr.map((i) => {
+        if (i.p_id == p_id) {
+          i.quantity = qty - 1;
+        }
       });
     } else {
       this.updateCart.updateCart(this.id, p_id, 1).subscribe((data) => {
         //@ts-ignore
         let dataobj = data.Message.filter((i) => i.p_id == p_id);
-        console.log(dataobj[0]);
+        // console.log(dataobj[0]);
         minbtn._elementRef.nativeElement.value = JSON.stringify([p_id, 1]);
         addbtn._elementRef.nativeElement.value = JSON.stringify([p_id, 1]);
         h5.textContent = dataobj[0].quantity;
         h4.textContent = '₹ ' + dataobj[0].total_price;
+        //@ts-ignore
+        this.priceEle.nativeElement.textContent = '₹' + data.total_price;
+        //@ts-ignore
+        this.total_price = data.total_price;
+      });
+      this.product_arr.map((i) => {
+        if (i.p_id == p_id) {
+          i.quantity = 1;
+        }
       });
     }
   }
@@ -136,7 +175,7 @@ total_price:number=0;
     h4: HTMLParagraphElement
   ) {
     let arr = JSON.parse(addbtn._elementRef.nativeElement.value);
-    console.log(arr);
+    // console.log(arr);
 
     let p_id = arr[0];
     let qty = arr[1];
@@ -144,11 +183,20 @@ total_price:number=0;
     this.updateCart.updateCart(this.id, p_id, qty + 1).subscribe((data) => {
       //@ts-ignore
       let dataobj = data.Message.filter((i) => i.p_id == p_id);
-      console.log(dataobj[0]);
+      // console.log(dataobj[0]);
       minbtn._elementRef.nativeElement.value = JSON.stringify([p_id, qty + 1]);
       addbtn._elementRef.nativeElement.value = JSON.stringify([p_id, qty + 1]);
       h5.textContent = dataobj[0].quantity;
       h4.textContent = '₹ ' + dataobj[0].total_price;
+      //@ts-ignore
+      this.priceEle.nativeElement.textContent = '₹' + data.total_price;
+      //@ts-ignore
+      this.total_price = data.total_price;
+    });
+    this.product_arr.map((i) => {
+      if (i.p_id == p_id) {
+        i.quantity = qty + 1;
+      }
     });
   }
 
@@ -157,6 +205,35 @@ total_price:number=0;
       console.log(data);
       localStorage.clear();
       this.router.navigate(['/login']);
+    });
+  }
+
+  checkOutpay() {
+    let arr: any = [];
+    this.product_arr.map((i) => {
+      if (i.quantity > 1) {
+        arr.push({
+          p_name: i.p_name,
+          quantity: i.quantity,
+          total_price: Math.floor(i.total_price / i.quantity),
+        });
+      } else {
+        arr.push({
+          p_name: i.p_name,
+          quantity: i.quantity,
+          total_price: i.total_price,
+        });
+      }
+    });
+    let obj = { Product: arr };
+
+    console.log(arr);
+
+    this.chekOutApi.checkOut(obj).subscribe((data) => {
+      this.product_arr=[];
+      // @ts-ignore
+      this.truncate.truncate(localStorage.getItem('id')).subscribe();
+      location.replace(data.url)
     });
   }
 }

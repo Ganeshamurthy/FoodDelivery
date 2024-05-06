@@ -24,10 +24,6 @@ export class LoginComponent {
     }
   }
 
-  toLogin() {
-    console.log('HELLO---------------------------------');
-    this.router.navigate(['/signup']);
-  }
 
   onSubmit() {
     this.loginService.login(this.email, this.password).subscribe((data) => {

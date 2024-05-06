@@ -12,17 +12,6 @@ import { LoginComponent } from './Layouts/login/login.component';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent implements OnInit {
-  route = inject(Router);
-flag = ['/login','/'].includes(location.pathname)
-token = (localStorage.getItem('token')===null)
-ngOnInit(){
-  console.log(this.flag);
-  console.log(location.pathname);
-}
-
-redirect(route:string){
-  this.route.navigate([`/${route}`])
-}
+export class AppComponent {
 
 }

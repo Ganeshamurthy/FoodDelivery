@@ -1,3 +1,5 @@
+@use '@angular/material' as mat;
+
 .example-spacer {
     flex: 2 1 auto;
   }
@@ -89,4 +91,44 @@
   --mat-icon-button-state-layer-color: orange;
   --mat-icon-button-ripple-color: rgba(255, 166, 0, 0.264);
 }
+
+mat-card {
+  @include mat.elevation(0);
+}
   
+.checkout-button{
+  padding: .2em 1em;
+  border: 2px solid orange;
+  background-color: transparent;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  transition: color .2s;
+  z-index: 2;
+  font-family: "Poppins", sans-serif;
+}
+.checkout-button::before{
+  content: " ";
+  background-color: orange;
+  z-index: -1;
+  width: 140%;
+  height: 320%;
+  position: absolute;
+  border-radius: 50%;
+  left: -4.9em;
+  top: -1.3em;
+  transition: all .5s;
+  font-family: "Poppins", sans-serif;
+}
+
+.checkout-button:hover{
+  color: orange;
+  font-family: "Poppins", sans-serif;
+  
+}
+
+.checkout-button:hover::before{
+  left: -48em;
+  top: 1em;
+  font-family: "Poppins", sans-serif;
+}

@@ -2,18 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
-
 @Injectable({
   providedIn: 'root'
 })
-export class TotalPriceService {
+export class PaymentService {
   private http = inject(HttpClient);
 
-  calculate_price(id:string|null):void{
-    console.log(id)
-    this.http.get(`http://localhost:8080/getTotalPrice/1`).subscribe(data=>{
-      console.log(data);
-      
-    });
+  checkOut(body:any):Observable<any>{
+    return this.http.post('http://localhost:8080/create-checkout-session',body)
   }
 }
