@@ -31,6 +31,7 @@ export class FoodProductComponent implements OnInit {
     })
   }
   show(event:MatButton){
-    this.addcart.addToCart(event._elementRef.nativeElement.value).subscribe();
+    //@ts-ignore
+    this.addcart.addToCart(event._elementRef.nativeElement.value,localStorage.getItem('id')).subscribe();
   }
 }

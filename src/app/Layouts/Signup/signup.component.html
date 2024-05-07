@@ -4,9 +4,16 @@
             <form (ngSubmit)="onSubmit()" >
                 <h1>Sign up</h1>
                 <span> Join to our Community!</span>
+                <input type="text" [(ngModel)]="name" name="email" placeholder="Name" />
                 <input type="email" [(ngModel)]="email" name="email" placeholder="Email" />
                 <input type="password" [(ngModel)]="password" name="password"  placeholder="Password" />
-                <button type="submit">Sign Up</button>
+                <textarea name="Address" [(ngModel)]="address" class="mb-2"  cols="33" rows="3" style="resize: none;" placeholder="Enter your address"></textarea>
+                <input type="text" [(ngModel)]="city" name="city" placeholder="Enter your city" />
+                <input type="number" [(ngModel)]="postelCode" name="postelCode"  placeholder="postelCode" />
+                <input type="text" [(ngModel)]="state" name="state" placeholder="State" />
+
+                
+                <button  type="submit">Sign Up</button>
             </form>
         </div>
         <div class="overlay-container">

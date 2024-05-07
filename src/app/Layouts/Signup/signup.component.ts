@@ -14,13 +14,18 @@ import { SignupService } from '../../Services/signup/signup.service';
 export class SignupComponent {
 
   email: string = '';
+  name:string = ''
   password: string = '';
+  address:string = '';
+  postelCode:string ='';
+  state:string='';
+  city:string=''
 
   private router = inject(Router);
   private signupService = inject(SignupService);
 
   onSubmit() {
-    this.signupService.signup(this.email,this.password).subscribe(data=>{
+    this.signupService.signup(this.email,this.password,this.name,this.address,this.postelCode,this.state,this.city).subscribe(data=>{
       if(data){
         alert(data.message)
         this.router.navigateByUrl('/login');

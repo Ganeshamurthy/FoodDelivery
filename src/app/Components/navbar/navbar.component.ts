@@ -74,6 +74,8 @@ export class NavbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = this.width < this.mobileWidth;
+    console.log(this.id);
+    
   }
   onWindowResize(event: any) {
     this.width = event.target.innerWidth;
@@ -225,7 +227,7 @@ export class NavbarComponent implements OnInit {
         });
       }
     });
-    let obj = { Product: arr };
+    let obj = { Product: arr,id:this.id };
 
     console.log(arr);
 
